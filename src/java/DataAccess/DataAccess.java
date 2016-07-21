@@ -14,7 +14,7 @@ import java.sql.*;
  * @sdsdsdsdsdsd
  */
 public class DataAccess {
-
+// nguyen demo
     protected Connection conn = null;
     protected Statement stmt = null;
     protected ResultSet rs = null;
