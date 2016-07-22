@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginAccount extends HttpServlet {
 
-    DataAccessManageAccount dataAccount = new DataAccessManageAccount();
+    DataAccess data = new DataAccess();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,46 +33,32 @@ public class LoginAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            dataAccount.connectData();
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            out.print(dataAccount.isAccount(email, password));
-            processRequest(request, response);
-            dataAccount.closeConnect();
-        }
-
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String sql;
+        sql = "if '" + email + "' in (select U.Email from [ManageAccount] U)\n"
+                + "begin\n"
+                + "	if '" + password + "' like (select U.[Pass] from [ManageAccount] U where U.Email like '" + email + "')\n"
+                + "	begin\n"
+                + "		select 'Ok;'+ CONVERT(varchar(10), U.IdUser) as Result from [ManageAccount] U where U.Email = '" + email + "'\n"
+                + "	end\n"
+                + "	else\n"
+                + "	begin\n"
+                + "		select 'No'as Result\n"
+                + "	end\n"
+                + "end\n"
+                + "else\n"
+                + "begin\n"
+                + "	select 'Account is not exist'as Result\n"
+                + "end";
+        String result = data.getDataSQL(sql);
+        response(response, result);
     }
 
-}
-
-class DataAccessManageAccount extends DataAccess {
-
-    public String isAccount(String email, String pass) {
-
-        String re = "";
-        String select_isaccount = "select * from ManageAccount where Email like ? and Pass like ?";
-        try {
-            sql = select_isaccount;
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, email);
-            pst.setString(2, pass);
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                //Retrieve by column name
-                int id = rs.getInt("IdUser");
-                re = "" + id;
-            }
-            if (re.equals("")) {
-                return "No";
-            } else {
-                return re;
-            }
-        } catch (Exception e) {
-            re = e.toString();
-            return re;
-        }
+    private void response(HttpServletResponse resp, String msg)
+            throws IOException {
+        PrintWriter out = resp.getWriter();
+        out.println(msg);
     }
+
 }

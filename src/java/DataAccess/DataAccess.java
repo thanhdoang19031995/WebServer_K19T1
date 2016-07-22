@@ -83,4 +83,41 @@ public class DataAccess {
         }
         return re;
     }
+
+    public String getDataSQL(String sql) {
+        String re = "";
+        //ResultSet rs;
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                //Retrieve by column name
+                String result = rs.getString("Result");
+                re = re + result + "\n";
+            }
+        } catch (SQLException se) {
+            se.getMessage();
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            try {
+                if (stmt != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.getMessage();
+
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException se) {
+                se.getMessage();
+            }
+        }
+        return re.trim();
+    }
 }//end class

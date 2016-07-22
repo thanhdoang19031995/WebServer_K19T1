@@ -64,7 +64,6 @@ class DataAccessManageTag extends DataAccess {
                 String name = rs.getString("NameTag");
                 re = re + id + ";" + name + "\n";
             }
-
             return re.trim();
         } catch (Exception e) {
             re = e.toString();

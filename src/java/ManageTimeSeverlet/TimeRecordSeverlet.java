@@ -42,7 +42,7 @@ public class TimeRecordSeverlet extends HttpServlet {
                 + "where R.IdTag = T.IdTag and\n"
                 + "R.IdTime =" + IdTime;
         String result = Getdata(sql);
-        response(response, result);
+        response(response, result.trim());
     }
 
     private void response(HttpServletResponse resp, String msg)
