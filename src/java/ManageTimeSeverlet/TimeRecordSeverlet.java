@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +37,11 @@ public class TimeRecordSeverlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String IdTime = request.getParameter("IdTime");
+        String IdUser = request.getParameter("IdUser");
         String sql;
-        sql = "select R.IdTime , T.NameTag ,  R.BeginTime, R.EndTime, R.[Content] from ManageTime R, ManageTag T\n"
+        sql = "select R.IdTime , T.NameTag , R.BeginTime, R.EndTime,R.DateEnter, R.[Content] from ManageTime R, ManageTag T\n"
                 + "where R.IdTag = T.IdTag and\n"
-                + "R.IdTime =" + IdTime;
+                + "R.IdUser =" + IdUser;
         String result = Getdata(sql);
         response(response, result.trim());
     }
@@ -65,10 +66,11 @@ public class TimeRecordSeverlet extends HttpServlet {
                 //Retrieve by column name
                 int IdTime = rs.getInt("IdTime");
                 String NameTag = rs.getString("NameTag");
+                Date DateEnter = rs.getDate("DateEnter");
                 Time BeginTime = rs.getTime("BeginTime");
-                Time EnTime = rs.getTime("EndTime");
+                Time EndTime = rs.getTime("EndTime");
                 String Content = rs.getString("Content");
-                re = re + IdTime + ";" + NameTag + ";" + BeginTime + ";" + EnTime + ";" + Content + "\n";
+                re = re + IdTime + ";" + NameTag + ";"+ BeginTime + ";" + EndTime + ";" + DateEnter + ";" + Content + "\n";
             }
         } catch (SQLException se) {
             //Handle errors for JDBC
