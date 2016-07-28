@@ -23,26 +23,28 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author TrungKien
  */
-public class TimeRecordSeverlet extends HttpServlet {
+public class TimeRecordSelectSeverlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String IdUser = request.getParameter("IdUser");
+        String IdTime = request.getParameter("IdTime");
         String sql;
-        sql = "select R.IdTime , T.NameTag , R.BeginTime, R.EndTime,R.DateEnter, R.[Content] from ManageTime R, ManageTag T\n"
-                + "where R.IdTag = T.IdTag and\n"
-                + "R.IdUser =" + IdUser+"order by R.IdTime DESC";
+//        sql = "select R.IdTime , T.NameTag ,  R.BeginTime, R.EndTime, R.[Content] from ManageTime R, ManageTag T\n"
+//                + "where R.IdTag = T.IdTag and\n"
+//                + "R.IdTime =" + IdTime;
+        sql="select * from ManageTime where IdTime="+IdTime;
         String result = Getdata(sql);
-        response(response, result.trim());
+        response(response, result);
     }
 
     private void response(HttpServletResponse resp, String msg)
@@ -64,12 +66,13 @@ public class TimeRecordSeverlet extends HttpServlet {
             while (rs.next()) {
                 //Retrieve by column name
                 int IdTime = rs.getInt("IdTime");
-                String NameTag = rs.getString("NameTag");
-                Date DateEnter = rs.getDate("DateEnter");
+                int IdUser=rs.getInt("IdUser");
+                int IdTag=rs.getInt("IdTag");
+                String Content = rs.getString("Content");
                 Time BeginTime = rs.getTime("BeginTime");
                 Time EndTime = rs.getTime("EndTime");
-                String Content = rs.getString("Content");
-                re = re + IdTime + ";" + NameTag + ";"+ BeginTime + ";" + EndTime + ";" + DateEnter + ";" + Content  + "\n";
+                Date DayEnd=rs.getDate("DateEnter");
+                re = re +IdTime+";"+IdUser+";"+IdTag+";"+Content+";"+BeginTime+";"+EndTime+";"+DayEnd+"\n";
             }
         } catch (SQLException se) {
             //Handle errors for JDBC

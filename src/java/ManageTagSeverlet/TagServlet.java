@@ -51,9 +51,12 @@ class DataAccessManageTag extends DataAccess {
     public String isTagIdUser(int IdUser) {
 
         String re = "";
+//        String select_istag = "select T.IdTag , T.NameTag from  ManageTag T, [ManageAccount] U \n"
+//                + "where T.IdUser = U.IdUser\n"
+//                + "and U.IdUser =" + IdUser;
         String select_istag = "select T.IdTag , T.NameTag from  ManageTag T, [ManageAccount] U \n"
-                + "where T.IdUser = U.IdUser\n"
-                + "and U.IdUser =" + IdUser;
+                + " where T.IdUser = U.IdUser \n"
+                + "and U.IdUser = " + IdUser + "order by T.IdTag DESC";
         try {
             sql = select_istag;
             pst = conn.prepareStatement(sql);

@@ -40,6 +40,10 @@
         <servlet-name>DeleteTimeRecordSeverlet</servlet-name>
         <servlet-class>ManageTimeSeverlet.DeleteTimeRecordSeverlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimeRecordSelectSeverlet</servlet-name>
+        <servlet-class>ManageTimeSeverlet.TimeRecordSelectSeverlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginAccount</servlet-name>
         <url-pattern>/LoginAccount</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>DeleteTimeRecordSeverlet</servlet-name>
         <url-pattern>/DeleteTimeRecordSeverlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimeRecordSelectSeverlet</servlet-name>
+        <url-pattern>/TimeRecordSelectSeverlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
