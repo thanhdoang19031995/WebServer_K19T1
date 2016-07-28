@@ -44,6 +44,14 @@
         <servlet-name>TimeRecordSelectSeverlet</servlet-name>
         <servlet-class>ManageTimeSeverlet.TimeRecordSelectSeverlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterAccountSeverlet</servlet-name>
+        <servlet-class>ManageAccountSeverlet.RegisterAccountSeverlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendMailSeverlet</servlet-name>
+        <servlet-class>ManageAccountSeverlet.SendMailSeverlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginAccount</servlet-name>
         <url-pattern>/LoginAccount</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>TimeRecordSelectSeverlet</servlet-name>
         <url-pattern>/TimeRecordSelectSeverlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterAccountSeverlet</servlet-name>
+        <url-pattern>/RegisterAccountSeverlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendMailSeverlet</servlet-name>
+        <url-pattern>/SendMailSeverlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
