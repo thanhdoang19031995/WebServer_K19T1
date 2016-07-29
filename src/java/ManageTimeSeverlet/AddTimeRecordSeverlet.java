@@ -26,7 +26,6 @@ public class AddTimeRecordSeverlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
         }
     }
 
@@ -42,16 +41,16 @@ public class AddTimeRecordSeverlet extends HttpServlet {
         String reContent = Content.replace('+', ' ');
         String sql;
         sql = "insert into ManageTime\n"
-                + "values (" + IdUser + "," + IdTag + ",'" +reContent + "'"
-                + ",'" + BeginTime + "','" + EndTime + "','"+DateEnter+"')";
-        
+                + "values (" + IdUser + "," + IdTag + ",'" + reContent + "'"
+                + ",'" + BeginTime + "','" + EndTime + "','" + DateEnter + "')";
+
         String result = ManageTime.setDataSQL(sql);
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 

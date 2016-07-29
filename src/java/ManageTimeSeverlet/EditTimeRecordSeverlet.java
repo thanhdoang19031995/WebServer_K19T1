@@ -19,8 +19,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditTimeRecordSeverlet extends HttpServlet {
 
-   DataAccess ManageTime = new DataAccess();
-   
+    DataAccess ManageTime = new DataAccess();
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,14 +47,14 @@ public class EditTimeRecordSeverlet extends HttpServlet {
                 + "EndTime = '" + EndTime + "',\n"
                 + "[Content] = '" + reContent + "'\n"
                 + "where IdTime =" + IdTime;
-        
+
         String result = ManageTime.setDataSQL(sql);
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 }

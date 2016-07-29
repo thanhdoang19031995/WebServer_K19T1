@@ -29,7 +29,6 @@ public class StatisticsTimeRecordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
         }
     }
 
@@ -55,9 +54,9 @@ public class StatisticsTimeRecordServlet extends HttpServlet {
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 
@@ -80,27 +79,24 @@ public class StatisticsTimeRecordServlet extends HttpServlet {
                 String Content = rs.getString("Content");
                 re = re + IdTime + ";" + NameTag + ";" + BeginTime + ";" + EnTime + ";" + Content + "\n";
             }
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            re = se.toString();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            re = e.toString();
+        } catch (SQLException e) {
+            re = e.getMessage();
+        } catch (ClassNotFoundException e) {
+            re = e.getMessage();
         } finally {
-            //finally block used to close resources
             try {
                 if (stmt != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-
+            } catch (SQLException e) {
+                e.getMessage();
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-                re = se.toString();
+            } catch (SQLException e) {
+                re = e.getMessage();
             }
         }
         return re;

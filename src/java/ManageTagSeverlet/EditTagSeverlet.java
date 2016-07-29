@@ -26,7 +26,6 @@ public class EditTagSeverlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
         }
     }
 
@@ -35,20 +34,17 @@ public class EditTagSeverlet extends HttpServlet {
             throws ServletException, IOException {
         String IdTag = request.getParameter("IdTag");
         String IdUser = request.getParameter("IdUser");
-        //int _IdTag = Integer.parseInt(IdUser);
         String NameTag = request.getParameter("NameTag");
         String reNameTag = NameTag.replace('+', ' ');
         String sql;
-        //String sql2;
-        sql = "update ManageTag\n" +"set   NameTag = '"+reNameTag+"'\n" +"where IdTag =" + IdTag;
-        //sql2 ="update ManageTag set IdUser=?,NameTag=? where (IdTag=?)";
+        sql = "update ManageTag\n" +"set NameTag = '"+reNameTag+"'\n" +"where IdTag =" + IdTag;
         String result = ManageTag.setDataSQL(sql);
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 

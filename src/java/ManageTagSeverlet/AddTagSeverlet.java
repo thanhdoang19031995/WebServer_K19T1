@@ -25,20 +25,17 @@ public class AddTagSeverlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String IdUser = request.getParameter("IdUser");
-        String NameTag = request.getParameter("name");
+        String NameTag = request.getParameter("NameTag");
         String rename = NameTag.replace('+', ' ');
         String sql;
-
-        //sql = "insert into ManageTag(IdUser,Nametag) values ("+IdUser+","+NameTag+")";
-        //  + "values ("+ IdUser +",'" + NameTag + "')";
-        sql = "insert into ManageTag\n"+ "values (" +IdUser+ ",'" + rename+"')";
+        sql = "insert into ManageTag\n" + "values (" + IdUser + ",'" + rename + "')";
         String result = ManageTag.setDataSQL(sql);
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 

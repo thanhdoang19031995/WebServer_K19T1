@@ -26,21 +26,20 @@ public class LoginAccount extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String Email = request.getParameter("Email");
+        String Password = request.getParameter("Password");
         String sql;
-        sql = "if '" + email + "' in (select U.Email from [ManageAccount] U)\n"
+        sql = "if '" + Email + "' in (select U.Email from [ManageAccount] U)\n"
                 + "begin\n"
-                + "	if '" + password + "' like (select U.[Pass] from [ManageAccount] U where U.Email like '" + email + "')\n"
+                + "	if '" + Password + "' like (select U.[Pass] from [ManageAccount] U where U.Email like '" + Email + "')\n"
                 + "	begin\n"
-                + "		select 'Ok;'+ CONVERT(varchar(10), U.IdUser) as Result from [ManageAccount] U where U.Email = '" + email + "'\n"
+                + "		select 'Ok;'+ CONVERT(varchar(10), U.IdUser) as Result from [ManageAccount] U where U.Email = '" + Email + "'\n"
                 + "	end\n"
                 + "	else\n"
                 + "	begin\n"
@@ -55,10 +54,9 @@ public class LoginAccount extends HttpServlet {
         response(response, result);
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
-
 }

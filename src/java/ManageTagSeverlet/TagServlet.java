@@ -26,7 +26,6 @@ public class TagServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-
         }
     }
 
@@ -49,11 +48,7 @@ public class TagServlet extends HttpServlet {
 class DataAccessManageTag extends DataAccess {
 
     public String isTagIdUser(int IdUser) {
-
         String re = "";
-//        String select_istag = "select T.IdTag , T.NameTag from  ManageTag T, [ManageAccount] U \n"
-//                + "where T.IdUser = U.IdUser\n"
-//                + "and U.IdUser =" + IdUser;
         String select_istag = "select T.IdTag , T.NameTag from  ManageTag T, [ManageAccount] U \n"
                 + " where T.IdUser = U.IdUser \n"
                 + "and U.IdUser = " + IdUser + "order by T.IdTag DESC";

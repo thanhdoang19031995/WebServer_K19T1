@@ -14,6 +14,7 @@ import java.sql.*;
  */
 public class DataAccess {
 // nguyen demo
+
     protected Connection conn = null;
     protected Statement stmt = null;
     protected ResultSet rs = null;
@@ -34,7 +35,7 @@ public class DataAccess {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             stmt = conn.createStatement();
             System.out.println("Connect Successfull");
-        } catch (Exception d) {
+        } catch (ClassNotFoundException | SQLException d) {
             d.getMessage();
         }
     }
@@ -58,27 +59,22 @@ public class DataAccess {
             stmt = conn.createStatement();
             stmt.executeUpdate(sql);
             re = "SUCCESSFUL";
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            re = se.toString();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            re = e.toString();
+        } catch (SQLException | ClassNotFoundException e) {
+            re = e.getMessage();
         } finally {
-            //finally block used to close resources
             try {
                 if (stmt != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-
+            } catch (SQLException e) {
+                e.getMessage();
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-                re = se.toString();
+            } catch (SQLException e) {
+                re = e.getMessage();
             }
         }
         return re;
@@ -86,7 +82,6 @@ public class DataAccess {
 
     public String getDataSQL(String sql) {
         String re = "";
-        //ResultSet rs;
         try {
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -97,25 +92,23 @@ public class DataAccess {
                 String result = rs.getString("Result");
                 re = re + result + "\n";
             }
-        } catch (SQLException se) {
-            se.getMessage();
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.getMessage();
         } finally {
             try {
                 if (stmt != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-                se.getMessage();
+            } catch (SQLException e) {
+                e.getMessage();
 
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-                se.getMessage();
+            } catch (SQLException e) {
+                e.getMessage();
             }
         }
         return re.trim();

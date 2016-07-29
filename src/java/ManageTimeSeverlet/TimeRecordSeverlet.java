@@ -40,14 +40,14 @@ public class TimeRecordSeverlet extends HttpServlet {
         String sql;
         sql = "select R.IdTime , T.NameTag , R.BeginTime, R.EndTime,R.DateEnter, R.[Content] from ManageTime R, ManageTag T\n"
                 + "where R.IdTag = T.IdTag and\n"
-                + "R.IdUser =" + IdUser+"order by R.IdTime DESC";
+                + "R.IdUser =" + IdUser + "order by R.IdTime DESC";
         String result = Getdata(sql);
         response(response, result.trim());
     }
 
-    private void response(HttpServletResponse resp, String msg)
+    private void response(HttpServletResponse response, String msg)
             throws IOException {
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = response.getWriter();
         out.println(msg);
     }
 
@@ -62,36 +62,30 @@ public class TimeRecordSeverlet extends HttpServlet {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                //Retrieve by column name
                 int IdTime = rs.getInt("IdTime");
                 String NameTag = rs.getString("NameTag");
                 Date DateEnter = rs.getDate("DateEnter");
                 Time BeginTime = rs.getTime("BeginTime");
                 Time EndTime = rs.getTime("EndTime");
                 String Content = rs.getString("Content");
-                re = re + IdTime + ";" + NameTag + ";"+ BeginTime + ";" + EndTime + ";" + DateEnter + ";" + Content  + "\n";
+                re = re + IdTime + ";" + NameTag + ";" + BeginTime + ";" + EndTime + ";" + DateEnter + ";" + Content + "\n";
             }
-        } catch (SQLException se) {
-            //Handle errors for JDBC
-            re = se.toString();
-        } catch (Exception e) {
-            //Handle errors for Class.forName
-            re = e.toString();
+        } catch (SQLException | ClassNotFoundException e) {
+            re = e.getMessage();
         } finally {
-            //finally block used to close resources
             try {
                 if (stmt != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-
+            } catch (SQLException e) {
+                e.getMessage();
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
-            } catch (SQLException se) {
-                re = se.toString();
+            } catch (SQLException e) {
+                re = e.getMessage();
             }
         }
         return re;
